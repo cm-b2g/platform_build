@@ -17,7 +17,6 @@
 #
 
 ifneq ($(SKIP_BOOT_JARS_CHECK),)
-ifneq ($(SKIP_BOOT_JARS_CHECK),true)
 ifneq ($(TARGET_BUILD_PDK),true)
 ifdef PRODUCT_BOOT_JARS
 
