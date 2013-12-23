@@ -25,7 +25,6 @@ PRODUCT_PACKAGES += \
     libandroidfw \
     libaudiopreprocessing \
     libaudioutils \
-    libfilterpack_imageproc \
     libgabi++ \
     libmdnssd \
     libnfc_ndef \
