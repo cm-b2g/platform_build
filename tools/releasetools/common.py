@@ -1400,6 +1400,7 @@ PARTITION_TYPES = {
     "emmc": "EMMC",
     "f2fs": "EMMC",
     "squashfs": "EMMC",
+    "ubifs": "MTD",
     "ext2": "EMMC",
     "ext3": "EMMC",
     "vfat": "EMMC"

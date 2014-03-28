@@ -733,6 +733,12 @@ else
 ifeq ($(TARGET_USERIMAGES_USE_EXT4),true)
 INTERNAL_USERIMAGES_USE_EXT := true
 INTERNAL_USERIMAGES_EXT_VARIANT := ext4
+else
+ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)
+INTERNAL_USERIMAGES_USE_UBIFS := true
+INTERNAL_USERIMAGES_EXT_VARIANT := ubifs
+INTERNAL_USERIMAGES_SPARSE_UBIFS_FLAG := -F -x lzo
+endif
 endif
 endif
 endif
@@ -764,12 +770,11 @@ endif
 ifeq ($(INTERNAL_USERIMAGES_USE_F2FS),true)
 INTERNAL_USERIMAGES_DEPS += $(MKF2FSUSERIMG) $(MAKE_F2FS)
 endif
+ifeq ($(INTERNAL_USERIMAGES_USE_UBIFS),true)
+INTERNAL_USERIMAGES_DEPS := $(MAKE_UBIFS)
+endif
 ifeq ($(INTERNAL_USERIMAGES_USE_YAFFS),true)
 INTERNAL_USERIMAGES_DEPS += $(MKYAFFS2)
-endif
-
-ifeq ($(BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE),squashfs)
-INTERNAL_USERIMAGES_DEPS += $(MAKE_SQUASHFS) $(MKSQUASHFSUSERIMG) $(IMG2SIMG)
 endif
 
 ifeq ($(BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE),squashfs)
@@ -826,6 +831,7 @@ $(if $(filter true,$(BOARD_BUILD_SYSTEM_ROOT_IMAGE)),\
     $(hide) echo "system_root_image=true" >> $(1);\
     echo "ramdisk_dir=$(TARGET_ROOT_OUT)" >> $(1))
 $(if $(2),$(hide) $(foreach kv,$(2),echo "$(kv)" >> $(1);))
+$(if $(INTERNAL_USERIMAGES_SPARSE_UBIFS_FLAG),$(hide) echo "ubifs_sparse_flag=$(INTERNAL_USERIMAGES_SPARSE_UBIFS_FLAG)" >> $(1))
 endef
 
 # -----------------------------------------------------------------
@@ -1264,8 +1270,12 @@ SYSTEMIMAGE_SOURCE_DIR := $(TARGET_OUT)
 
 $(INSTALLED_SYSTEMIMAGE): $(BUILT_SYSTEMIMAGE) $(RECOVERY_FROM_BOOT_PATCH) | $(ACP)
 	@echo -e ${CL_CYN}"Install system fs image: $@"${CL_RST}
+ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)
+	$(hide) cp -f $(systemimage_intermediates)/*.img $(PRODUCT_OUT)/
+else
 	$(copy-file-to-target)
-	$(hide) $(call assert-max-image-size,$@ $(RECOVERY_FROM_BOOT_PATCH),$(BOARD_SYSTEMIMAGE_PARTITION_SIZE))
+	$(hide) $(call assert-max-image-size,$@ $(RECOVERY_FROM_BOOT_PATCH),$(BOARD_SYSTEMIMAGE_PARTITION_SIZE),yaffs)
+endif
 
 systemimage: $(INSTALLED_SYSTEMIMAGE)
 
@@ -1537,7 +1547,8 @@ DISTTOOLS :=  $(HOST_OUT_EXECUTABLES)/minigzip \
   $(HOST_OUT_EXECUTABLES)/verity_signer \
   $(HOST_OUT_EXECUTABLES)/append2simg \
   $(HOST_OUT_EXECUTABLES)/img2simg \
-  $(HOST_OUT_EXECUTABLES)/boot_signer
+  $(HOST_OUT_EXECUTABLES)/boot_signer \
+  $(HOST_OUT_EXECUTABLES)/mkfs.ubifs
 
 # Shared libraries.
 DISTTOOLS += \
