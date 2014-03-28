@@ -1342,7 +1342,8 @@ PARTITION_TYPES = {
     "ext4": "EMMC",
     "emmc": "EMMC",
     "f2fs": "EMMC",
-    "squashfs": "EMMC"
+    "squashfs": "EMMC",
+    "ubifs": "MTD"
 }
 
 def GetTypeAndDevice(mount_point, info):
