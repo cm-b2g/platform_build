@@ -57,7 +57,6 @@ PRODUCT_PACKAGES += \
     libOpenSLES \
     libdownmix \
     libdrmframework \
-    libfilterfw \
     libkeystore \
     libwilhelm \
     logd \
