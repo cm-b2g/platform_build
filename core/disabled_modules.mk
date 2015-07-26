@@ -15,4 +15,11 @@ DISABLED_USER_MODULES := \
 	librs_jni \
 	libandroid_runtime \
 	hwuitest \
+    com.qualcomm.location \
+    com.qualcomm.services.location \
+    qcrilmsgtunnel \
+    shutdownlistener \
+    TimeService \
+    qcnvitems \
+    qcrilhook \
 
