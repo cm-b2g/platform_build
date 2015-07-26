@@ -17,3 +17,10 @@ DISABLED_USER_MODULES := \
 	hwuitest \
 	skia_dm \
 	skia_nanobench
+	com.qualcomm.location \
+	com.qualcomm.services.location \
+	qcrilmsgtunnel \
+	shutdownlistener \
+	TimeService \
+	qcnvitems \
+	qcrilhook \
