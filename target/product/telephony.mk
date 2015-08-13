@@ -21,6 +21,7 @@ PRODUCT_PACKAGES := \
     Dialer \
     InCallUI \
     Mms \
-    rild
+    rild \
+    wpa_supplicant
 
 PRODUCT_COPY_FILES := \
