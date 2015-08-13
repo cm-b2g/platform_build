@@ -23,6 +23,7 @@ PRODUCT_PACKAGES := \
     CallLogBackup \
     InCallUI \
     Mms \
-    rild
+    rild \
+    wpa_supplicant
 
 PRODUCT_COPY_FILES := \
