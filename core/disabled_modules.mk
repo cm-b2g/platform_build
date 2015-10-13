@@ -15,4 +15,5 @@ DISABLED_USER_MODULES := \
 	librs_jni \
 	libandroid_runtime \
 	hwuitest \
-
+	skia_dm \
+	skia_nanobench
