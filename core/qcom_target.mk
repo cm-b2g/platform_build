@@ -11,6 +11,12 @@ $(call project-set-path,qcom-$(2),$(strip $(if $(USE_DEVICE_SPECIFIC_$(1)), \
     $(TARGET_DEVICE_DIR)/$(2), $(3))))
 endef
 
+define set-platform-specific-path
+$(call project-set-path,qcom-$(2),$(strip $(if $(QCOM_HARDWARE_$(1)_VARIANT), \
+    $(3)/$(QCOM_HARDWARE_$(1)_VARIANT), \
+    $(3)/$(QCOM_HARDWARE_VARIANT))))
+endef
+
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
 
     qcom_flags := -DQCOM_HARDWARE
@@ -69,11 +75,12 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
         endif
     endif
 
-$(call project-set-path,qcom-audio,hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT))
+$(call set-platform-specific-path,AUDIO,audio,hardware/qcom/audio-caf)
+$(call set-platform-specific-path,DISPLAY,display,hardware/qcom/display-caf)
+$(call set-platform-specific-path,MEDIA,media,hardware/qcom/media-caf)
+
 $(call set-device-specific-path,CAMERA,camera,hardware/qcom/camera)
-$(call project-set-path,qcom-display,hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT))
 $(call set-device-specific-path,GPS,gps,hardware/qcom/gps)
-$(call project-set-path,qcom-media,hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT))
 $(call set-device-specific-path,SENSORS,sensors,hardware/qcom/sensors)
 $(call ril-set-path-variant,ril)
 $(call set-device-specific-path,LOC_API,loc-api,vendor/qcom/opensource/location)
