@@ -70,10 +70,17 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
     endif
 
 $(call project-set-path,qcom-audio,hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT))
-$(call set-device-specific-path,CAMERA,camera,hardware/qcom/camera)
+
+ifeq ($(SONY_BF64_KERNEL_VARIANT),true)
+$(call project-set-path,qcom-display,hardware/qcom/display-caf/sony)
+$(call project-set-path,qcom-media,hardware/qcom/media-caf/sony)
+else
 $(call project-set-path,qcom-display,hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT))
-$(call set-device-specific-path,GPS,gps,hardware/qcom/gps)
 $(call project-set-path,qcom-media,hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT))
+endif
+
+$(call set-device-specific-path,CAMERA,camera,hardware/qcom/camera)
+$(call set-device-specific-path,GPS,gps,hardware/qcom/gps)
 $(call set-device-specific-path,SENSORS,sensors,hardware/qcom/sensors)
 $(call ril-set-path-variant,ril)
 $(call set-device-specific-path,LOC_API,loc-api,vendor/qcom/opensource/location)
