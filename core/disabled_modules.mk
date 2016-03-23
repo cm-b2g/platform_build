@@ -16,7 +16,7 @@ DISABLED_USER_MODULES := \
 	libandroid_runtime \
 	hwuitest \
 	skia_dm \
-	skia_nanobench
+	skia_nanobench \
 	com.qualcomm.location \
 	com.qualcomm.services.location \
 	qcrilmsgtunnel \
@@ -24,3 +24,4 @@ DISABLED_USER_MODULES := \
 	TimeService \
 	qcnvitems \
 	qcrilhook \
+	libextmedia_jni \

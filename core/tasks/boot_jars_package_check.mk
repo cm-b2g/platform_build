@@ -43,5 +43,4 @@ droidcore : check-boot-jars
 
 endif  # PRODUCT_BOOT_JARS
 endif  # TARGET_BUILD_PDK not true
-endif  # SKIP_BOOT_JARS_CHECK not true
 endif  # SKIP_BOOT_JARS_CHECK not defined
